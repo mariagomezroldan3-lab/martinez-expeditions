@@ -722,3 +722,6 @@ ul, ol { list-style: none; }
   display: flex; align-items: center; justify-content: center;
   background: #ece6dc; color: #8a8178; font-size: 20px; font-weight: 600;
 }
+
+.fade-text__content p { margin: 0; }
+.fade-text__content p + p { margin-top: 0; }

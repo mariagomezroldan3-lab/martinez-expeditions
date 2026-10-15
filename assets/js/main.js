@@ -132,14 +132,27 @@
 
   /* ---------- Texto con degradado + "Leer más" (equipo) ---------- */
   function initFadeText() {
-    document.querySelectorAll(".fade-text").forEach(function (block) {
+    var blocks = document.querySelectorAll(".fade-text");
+    if (!blocks.length) return;
+    var labels = { es: ["Leer más…", "Leer menos"], en: ["Read more…", "Read less"] };
+    var refresh = function () {
+      var lang = document.documentElement.getAttribute("lang") === "en" ? "en" : "es";
+      blocks.forEach(function (block) {
+        var btn = block.querySelector(".read-more");
+        if (btn) btn.textContent = labels[lang][block.classList.contains("is-expanded") ? 1 : 0];
+      });
+    };
+    blocks.forEach(function (block) {
       var btn = block.querySelector(".read-more");
       if (!btn) return;
       btn.addEventListener("click", function () {
-        var expanded = block.classList.toggle("is-expanded");
-        btn.textContent = expanded ? btn.getAttribute("data-less") : btn.getAttribute("data-more");
+        block.classList.toggle("is-expanded");
+        refresh();
       });
     });
+    var langSwitch = document.getElementById("langSwitch");
+    if (langSwitch) langSwitch.addEventListener("click", refresh);
+    refresh();
   }
 
   /* ---------- Selector de país (expediciones) ---------- */
