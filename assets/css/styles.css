@@ -620,7 +620,7 @@ ul, ol { list-style: none; }
   font-size: clamp(40px, 5vw, 72px); line-height: 1.05; text-shadow: 0 2px 18px rgba(0,0,0,.35);
 }
 
-.team-page { padding: 40px 0 120px; background: var(--cream-light); }
+.team-page { padding: 40px 0 160px; background: var(--cream-light); }
 .team-page .container { max-width: 1280px; }
 .team-page__intro { color: #5f5a55; font-size: 16px; line-height: 1.75; margin-bottom: 60px; }
 .team-page__intro strong { color: #33373d; font-weight: 700; }
