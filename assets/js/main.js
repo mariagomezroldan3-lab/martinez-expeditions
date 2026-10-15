@@ -255,6 +255,66 @@
     });
   }
 
+  /* ---------- Visor de fotos (Ver fotos) ---------- */
+  function initLightbox() {
+    var buttons = document.querySelectorAll(".exp-card__photos");
+    if (!buttons.length) return;
+    var chev = function (d) { return '<svg viewBox="0 0 24 24"><path d="' + d + '" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>'; };
+    var box = document.createElement("div");
+    box.className = "lightbox";
+    box.hidden = true;
+    box.innerHTML =
+      '<div class="lightbox__frame">' +
+        '<img class="lightbox__img" alt="">' +
+        '<button type="button" class="lightbox__btn lightbox__close" aria-label="Cerrar">' + chev("M6 6l12 12M18 6 6 18") + '</button>' +
+        '<button type="button" class="lightbox__btn lightbox__prev" aria-label="Anterior">' + chev("M15 5l-7 7 7 7") + '</button>' +
+        '<button type="button" class="lightbox__btn lightbox__next" aria-label="Siguiente">' + chev("M9 5l7 7-7 7") + '</button>' +
+        '<span class="lightbox__count"></span>' +
+      '</div>';
+    document.body.appendChild(box);
+    var img = box.querySelector(".lightbox__img");
+    var count = box.querySelector(".lightbox__count");
+    var list = [], index = 0;
+
+    var show = function (i) {
+      index = (i + list.length) % list.length;
+      img.src = list[index];
+      count.textContent = (index + 1) + " / " + list.length;
+    };
+    var open = function (srcs) {
+      if (!srcs.length) return;
+      list = srcs;
+      box.classList.toggle("is-single", list.length < 2);
+      show(0);
+      box.hidden = false;
+      document.body.classList.add("lightbox-open");
+    };
+    var close = function () {
+      box.hidden = true;
+      document.body.classList.remove("lightbox-open");
+    };
+
+    buttons.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var card = btn.closest(".exp-card");
+        if (!card) return;
+        var imgs = card.querySelectorAll(".exp-card__gallery img");
+        if (!imgs.length) imgs = card.querySelectorAll(".exp-card__media img");
+        open(Array.prototype.map.call(imgs, function (el) { return el.currentSrc || el.src; }));
+      });
+    });
+    box.querySelector(".lightbox__close").addEventListener("click", close);
+    box.querySelector(".lightbox__prev").addEventListener("click", function () { show(index - 1); });
+    box.querySelector(".lightbox__next").addEventListener("click", function () { show(index + 1); });
+    box.addEventListener("click", function (e) { if (e.target === box) close(); });
+    document.addEventListener("keydown", function (e) {
+      if (box.hidden) return;
+      if (e.key === "Escape") close();
+      else if (e.key === "ArrowLeft") show(index - 1);
+      else if (e.key === "ArrowRight") show(index + 1);
+    });
+  }
+
   /* ---------- Acordeón de FAQ ---------- */
   function initFaqAccordion() {
     var items = document.querySelectorAll(".faq-item");
@@ -341,6 +401,7 @@
     safe(initClampText, "clampText");
     safe(initFadeText, "fadeText");
     safe(initExpFilter, "expFilter");
+    safe(initLightbox, "lightbox");
     safe(initFaqAccordion, "faqAccordion");
     safe(initHeroSlider, "heroSlider");
     safe(initGallery, "gallery");

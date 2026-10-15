@@ -728,3 +728,40 @@ ul, ol { list-style: none; }
 
 .exp-card__zone { display: flex; align-items: center; gap: 6px; margin: -4px 0 16px; color: var(--orange); font-size: 15px; font-weight: 700; }
 .exp-card__zone svg { flex-shrink: 0; }
+
+/* ===== VISOR DE FOTOS ===== */
+.lightbox {
+  position: fixed; inset: 0; z-index: 300;
+  background: rgba(18,18,18,.82);
+  display: flex; align-items: center; justify-content: center; padding: 50px 90px;
+}
+.lightbox[hidden] { display: none; }
+.lightbox__frame { position: relative; display: inline-block; }
+.lightbox__img {
+  display: block; max-width: min(860px, calc(100vw - 180px)); max-height: calc(100vh - 110px);
+  width: auto; height: auto; object-fit: contain; border-radius: 12px; box-shadow: 0 20px 60px rgba(0,0,0,.5);
+}
+.lightbox__btn {
+  position: absolute; display: flex; align-items: center; justify-content: center;
+  width: 50px; height: 50px; border-radius: 50%; border: none; cursor: pointer;
+  background: rgba(255,255,255,.72); color: #fff; transition: background .2s ease;
+}
+.lightbox__btn:hover { background: rgba(255,255,255,.92); }
+.lightbox__btn svg { width: 18px; height: 18px; }
+.lightbox__close { top: -24px; right: -24px; width: 40px; height: 40px; background: rgba(255,255,255,.75); }
+.lightbox__close svg { width: 14px; height: 14px; }
+.lightbox__prev { left: -70px; top: 50%; transform: translateY(-50%); }
+.lightbox__next { right: -70px; top: 50%; transform: translateY(-50%); }
+.lightbox__btn svg path { stroke: #fff; }
+.lightbox__count {
+  position: absolute; left: 50%; bottom: -16px; transform: translateX(-50%);
+  background: #1e1e1e; color: #fff; font-size: 14px; font-weight: 700; padding: 6px 16px; border-radius: 20px;
+}
+.lightbox.is-single .lightbox__prev, .lightbox.is-single .lightbox__next { display: none; }
+body.lightbox-open { overflow: hidden; }
+@media (max-width: 700px) {
+  .lightbox { padding: 50px 14px; }
+  .lightbox__img { max-width: calc(100vw - 28px); }
+  .lightbox__prev { left: 8px; } .lightbox__next { right: 8px; }
+  .lightbox__close { right: 6px; top: -46px; }
+}
