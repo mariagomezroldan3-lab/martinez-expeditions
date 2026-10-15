@@ -725,3 +725,6 @@ ul, ol { list-style: none; }
 
 .fade-text__content p { margin: 0; }
 .fade-text__content p + p { margin-top: 0; }
+
+.exp-card__zone { display: flex; align-items: center; gap: 6px; margin: -4px 0 16px; color: var(--orange); font-size: 15px; font-weight: 700; }
+.exp-card__zone svg { flex-shrink: 0; }
